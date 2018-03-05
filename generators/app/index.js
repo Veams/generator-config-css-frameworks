@@ -6,6 +6,7 @@ const config = require('./config');
 module.exports = class extends Generator {
 	initializing() {
 		this.globalStore = this.options.__store;
+		this.choices = this.options.availableChoices || Object.keys(config).map(item => config[ item ]);
 	}
 
 	prompting() {
@@ -40,7 +41,7 @@ module.exports = class extends Generator {
 						value: config.includeMediaId,
 						checked: true
 					}
-				],
+				].filter(choice => this.choices.includes(choice.value)),
 				default: []
 			}
 		];
@@ -52,9 +53,9 @@ module.exports = class extends Generator {
 
 	configuring() {
 		if (this.globalStore) {
-			this.globalStore.set('css-frameworks', this.props.cssFrameworks);
+			this.globalStore.set('cssFrameworks', this.props.cssFrameworks);
 		} else {
-			this.config.set('css-frameworks', this.props.cssFrameworks);
+			this.config.set('cssFrameworks', this.props.cssFrameworks);
 		}
 	}
 };

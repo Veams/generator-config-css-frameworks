@@ -39,7 +39,8 @@ module.exports = class extends Generator {
 
 	initializing() {
 		this.composeWith(require.resolve('generator-config-css-frameworks'), {
-			__store: this.config
+			__store: this.config,
+			availableChoices: ['lost-grid', 'include-media']
 		});
 
 	}
@@ -68,6 +69,25 @@ module.exports = class extends Generator {
 You can also see, that we pass the config object (`this.config`) - which is a store instance - from the main generator to the sub generator. 
 
 When the store instance is provided like that (`this.options.__store`), then this sub generator is saving the answers in this store instance.
+
+### Options
+
+* `__store` {Object} [`this.config`] - Store object provided by the main generator.
+* `availableChoices` {Array} [all frameworks] - You can display a specific amount of choices by providing an array of items. The items can be found in the config file of the package. 
+
+### Config File
+
+The config file contains the ids of the frameworks you can choose from: 
+
+``` js
+module.exports = {
+	foundationId: 'foundation-sites',
+	neatId: 'bourbon-neat',
+	bootstrapId: 'bootstrap-sass',
+	lostGridId: 'lost-grid',
+	includeMediaId: 'include-media'
+};
+```
 
 ## Getting To Know Yeoman
 
